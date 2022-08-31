@@ -2,20 +2,16 @@ import type { FC } from "react";
 import { memo } from "react";
 import { useRecoilValue } from "recoil";
 import { todoListStatsState } from "../../state/todoList";
+import { Typography } from "antd";
 
 const TodoListStats: FC = () => {
-  const { totalNum, totalCompletedNum, totalUncompletedNum, percentCompleted } =
+  const { totalNum, totalCompletedNum, percentCompleted } =
     useRecoilValue(todoListStatsState);
 
   return (
-    <div>
-      <ul>
-        <li>Total items: {totalNum}</li>
-        <li>Items completed: {totalCompletedNum}</li>
-        <li>Items not completed: {totalUncompletedNum}</li>
-        <li>Completed: {percentCompleted}%</li>
-      </ul>
-    </div>
+    <Typography.Title level={4}>
+      Completed: {totalCompletedNum}/{totalNum}, {percentCompleted}%
+    </Typography.Title>
   );
 };
 

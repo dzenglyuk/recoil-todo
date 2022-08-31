@@ -1,22 +1,25 @@
 import { FC, ChangeEventHandler } from "react";
 import { memo, useState } from "react";
 import { useSetRecoilState } from "recoil";
+import { Input, Button } from "antd";
 import { todoListState } from "../../state/todoList";
 import { generateId } from "../../utils/generateId";
+import { styles } from "./styles";
 
 const TodoItemCreator: FC = () => {
   const [inputValue, setInputValue] = useState("");
   const setTodoList = useSetRecoilState(todoListState);
 
   const addItem = () => {
-    setTodoList((todoList) => [
-      ...todoList,
-      {
-        id: generateId(),
-        value: inputValue,
-        isComplete: false,
-      },
-    ]);
+    inputValue &&
+      setTodoList((todoList) => [
+        ...todoList,
+        {
+          id: generateId(),
+          value: inputValue,
+          isComplete: false,
+        },
+      ]);
     setInputValue("");
   };
 
@@ -27,9 +30,16 @@ const TodoItemCreator: FC = () => {
   };
 
   return (
-    <div>
-      <input type="text" value={inputValue} onChange={handleChange} />
-      <button onClick={addItem}>Add</button>
+    <div style={styles.container}>
+      <Input
+        value={inputValue}
+        onChange={handleChange}
+        style={styles.input}
+        placeholder={"Start typing..."}
+      />
+      <Button onClick={addItem} type="primary">
+        Add
+      </Button>
     </div>
   );
 };

@@ -1,27 +1,29 @@
-import type { ChangeEventHandler, FC } from "react";
+import type { FC } from "react";
 import { memo } from "react";
 import { useRecoilState } from "recoil";
+import { Select } from "antd";
 import { TodoFilter } from "../../enums/todoFilter";
 import { todoListFilterState } from "../../state/todoList";
 
 const TodoListFilters: FC = () => {
   const [filter, setFilter] = useRecoilState(todoListFilterState);
 
-  const updateFilter: ChangeEventHandler<HTMLSelectElement> = ({
-    target: { value },
-  }) => {
-    setFilter(value as TodoFilter);
+  const updateFilter = (value: TodoFilter) => {
+    setFilter(value);
   };
 
   return (
-    <div>
-      Filter:
-      <select value={filter} onChange={updateFilter}>
-        <option value={TodoFilter.SHOW_ALL}>All</option>
-        <option value={TodoFilter.SHOW_COMPLETED}>Completed</option>
-        <option value={TodoFilter.SHOW_UNCOMPLETED}>Uncompleted</option>
-      </select>
-    </div>
+    <Select
+      defaultValue={filter}
+      onChange={updateFilter}
+      style={{ width: "30%" }}
+    >
+      <Select.Option value={TodoFilter.SHOW_ALL}>All</Select.Option>
+      <Select.Option value={TodoFilter.SHOW_COMPLETED}>Completed</Select.Option>
+      <Select.Option value={TodoFilter.SHOW_UNCOMPLETED}>
+        Uncompleted
+      </Select.Option>
+    </Select>
   );
 };
 
